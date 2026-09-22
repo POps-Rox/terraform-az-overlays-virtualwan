@@ -23,11 +23,8 @@ module "mod_rg" {
   org_name                = var.org_prefix
   environment             = var.environment
   workload_name           = var.workload_name
-  custom_rg_name          = var.custom_resource_group_name != null ? var.custom_resource_group_name : null
+  custom_rg_name          = local.effective_custom_resource_group_name
 
   // Tags
-  add_tags = merge(var.tags, {
-    DeployedBy = format("AzureNoOpsTF [%s]", terraform.workspace)
-  }) # Tags to be applied to all resources
+  add_tags = local.resource_group_tags # Tags to be applied to all resources
 }
-

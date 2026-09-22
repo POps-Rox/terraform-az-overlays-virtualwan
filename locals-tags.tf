@@ -9,4 +9,10 @@ locals {
     env      = var.environment
     workload = var.workload_name
   } : {}
+
+  resource_group_tags = merge(var.tags, {
+    DeployedBy = format("AzureNoOpsTF [%s]", terraform.workspace)
+  })
+
+  effective_resource_group_tags = merge(local.default_tags, local.resource_group_tags)
 }
